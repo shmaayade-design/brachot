@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>לימוד מסכת ברכות תשפ"ו | בית דגבלי</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1e3a8a;--accent:#f59e0b;--bg:#fef9f0;--radius:14px;--fs:16px;--hgrad:linear-gradient(135deg,var(--primary),#92400e);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Heebo',Arial,sans-serif;background:var(--bg);font-size:var(--fs);min-height:100vh;}
+.page{display:none;}.page.active{display:block;}
+.header{background:var(--hgrad);color:#fff;padding:20px 16px;text-align:center;position:relative;}
+.header-logo{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.4);margin-bottom:8px;}
+.header h1{font-size:22px;font-weight:900;margin-bottom:4px;}
+.header p{font-size:14px;opacity:.85;}
+.back-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:99px;padding:6px 14px;cursor:pointer;font-family:inherit;font-size:14px;}
+.card{background:#fff;border-radius:var(--radius);padding:20px;margin:12px 16px;box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.btn{display:block;width:100%;border:none;border-radius:var(--radius);padding:13px;font-size:var(--fs);font-weight:700;font-family:inherit;cursor:pointer;text-align:center;}
+.btn+.btn{margin-top:10px;}.btn:disabled{opacity:.5;cursor:not-allowed;}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-outline{background:#fff;color:var(--primary);border:2px solid var(--primary);}
+.btn-gray{background:#e5e7eb;color:#374151;}
+.btn-danger{background:#fee2e2;color:#dc2626;border:none;}
+.btn-sm{padding:7px 14px;font-size:13px;width:auto;}
+.form-group{margin-bottom:14px;}
+label{display:block;font-weight:700;margin-bottom:5px;font-size:14px;color:#374151;}
+input,textarea,select{width:100%;border:2px solid #e5e7eb;border-radius:10px;padding:11px;font-size:var(--fs);font-family:inherit;outline:none;}
+input:focus,textarea:focus,select:focus{border-color:var(--primary);}
+.ac-wrap{position:relative;}
+.ac-list{position:absolute;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;width:100%;max-height:200px;overflow-y:auto;display:none;}
+.ac-list.open{display:block;}
+.ac-item{padding:10px 14px;cursor:pointer;font-size:14px;border-bottom:1px solid #f3f4f6;}
+.ac-item:hover{background:#eff6ff;}
+.banner{background:#fef3c7;border-right:4px solid #f59e0b;border-radius:10px;padding:12px 16px;margin:8px 16px;font-size:14px;}
+.progress-bar{height:8px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:8px;}
+.progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s;}
+.points-badge{background:var(--accent);color:#fff;border-radius:99px;padding:5px 14px;font-size:14px;font-weight:700;display:inline-block;}
+.chapter-grid{display:grid;gap:10px;padding:0 16px 80px;}
+.chapter-card{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;border-right:4px solid var(--primary);transition:transform .15s,box-shadow .15s;}
+.chapter-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.1);}
+.chapter-card.locked{border-right-color:#d1d5db;opacity:.6;cursor:not-allowed;}
+.chapter-card.locked:hover{transform:none;}
+.chapter-card h3{font-size:15px;font-weight:700;margin-bottom:4px;}
+.chapter-card .meta{font-size:13px;color:#6b7280;}
+.task-btn{background:#fff;border:2px solid #e5e7eb;border-radius:12px;padding:14px 16px;width:100%;text-align:right;cursor:pointer;font-family:inherit;font-size:var(--fs);margin-bottom:10px;display:flex;align-items:center;gap:10px;transition:border-color .2s;}
+.task-btn:hover{border-color:var(--primary);}
+.task-btn.done{border-color:#22c55e;background:#f0fdf4;color:#166534;}
+.task-btn .icon{font-size:22px;}.task-btn .label{flex:1;font-weight:600;}.task-btn .check{color:#22c55e;font-size:18px;}
+.mishna-block{background:#f9f8f0;border-right:3px solid var(--primary);border-radius:10px;padding:14px;margin:0 16px 12px;line-height:1.9;}
+.mishna-num{font-size:12px;color:#6b7280;margin-bottom:4px;font-weight:600;}
+.mishna-check{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.mishna-check input[type=checkbox]{width:20px;height:20px;accent-color:var(--primary);cursor:pointer;flex-shrink:0;}
+.citation-box{background:#fef9c3;border-radius:8px;padding:10px;font-style:italic;font-size:14px;margin-bottom:12px;border-right:3px solid #f59e0b;}
+.riddle-opt{background:#fff;border:2px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;font-family:inherit;font-size:var(--fs);width:100%;text-align:right;transition:border-color .2s,background .2s;}
+.riddle-opt:hover:not(:disabled){border-color:var(--primary);}
+.riddle-opt.correct{background:#dcfce7;border-color:#22c55e;}
+.riddle-opt.wrong{background:#fee2e2;border-color:#ef4444;}
+.admin-tab-bar{display:flex;gap:4px;padding:12px 16px 0;overflow-x:auto;background:#fff;border-bottom:1px solid #e5e7eb;}
+.admin-tab{border:none;background:#e5e7eb;border-radius:10px 10px 0 0;padding:8px 14px;font-family:inherit;font-size:13px;cursor:pointer;white-space:nowrap;font-weight:600;}
+.admin-tab.active{background:var(--primary);color:#fff;}
+.admin-panel{display:none;padding:12px 16px 80px;}.admin-panel.active{display:block;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{border:1px solid #e5e7eb;padding:8px 10px;text-align:right;}
+th{background:#f3f4f6;font-weight:700;}tr:hover td{background:#f9fafb;}
+.editor-section{border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:16px;}
+.editor-section h3{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:12px;border-bottom:1px solid #f3f4f6;padding-bottom:8px;}
+.drag-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 14px;margin-bottom:8px;cursor:grab;user-select:none;}
+.drag-item:active{cursor:grabbing;opacity:.7;}
+.drag-handle{color:#9ca3af;font-size:18px;}
+.toggle-btn{border:none;border-radius:20px;padding:5px 14px;cursor:pointer;font-family:inherit;font-size:13px;background:#e5e7eb;font-weight:600;}
+.toggle-btn.on{background:#22c55e;color:#fff;}
+.preview-img{max-width:80px;max-height:60px;border-radius:8px;object-fit:cover;margin-top:6px;display:none;}
+.color-preset-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.color-preset{padding:8px 12px;border-radius:10px;border:2px solid #e5e7eb;cursor:pointer;font-size:13px;font-weight:600;transition:border-color .2s;}
+.color-preset:hover,.color-preset.sel{border-color:var(--primary);}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:12px 24px;border-radius:24px;font-size:15px;z-index:9999;animation:fadeup .3s ease;white-space:nowrap;}
+@keyframes fadeup{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="page-login" class="page active">
+  <div class="header">
+    <div id="login-logo-wrap"></div>
+    <h1 id="login-campaign">מבצע לימוד</h1>
+    <p id="login-org">בית ספרנו</p>
+  </div>
+  <div class="card" style="margin-top:20px;">
+    <div class="form-group"><label>שם פרטי</label>
+      <div class="ac-wrap"><input id="inp-first" placeholder="הקלד שם פרטי..." autocomplete="off"><div class="ac-list" id="ac-first"></div></div>
+    </div>
+    <div class="form-group"><label>שם משפחה</label><input id="inp-last" placeholder="בחר מהרשימה..." readonly></div>
+    <div class="form-group"><label>כיתה</label><input id="inp-grade" placeholder="בחר מהרשימה..." readonly></div>
+    <div id="login-error" style="color:#ef4444;font-size:14px;margin-bottom:10px;display:none;"></div>
+    <button class="btn btn-primary" onclick="doLogin()">כניסה ✨</button>
+    <button class="btn btn-gray" onclick="showAdminGate()">כניסת מנהל 🔑</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="page">
+  <div class="header">
+    <div id="dash-logo-wrap"></div>
+    <h1 id="dash-campaign">מבצע לימוד</h1>
+    <p id="dash-user-info">ברוך הבא!</p>
+    <div style="margin-top:10px;"><span class="points-badge" id="dash-points">0 נקודות</span></div>
+  </div>
+  <div id="dash-banner" class="banner" style="display:none;"></div>
+  <div class="chapter-grid" id="chapter-grid"></div>
+</div>
+
+<!-- CHAPTER -->
+<div id="page-chapter" class="page">
+  <div class="header">
+    <button class="back-btn" onclick="showDashboard()">← חזור</button>
+    <h1 id="ch-title">פרק א</h1><p id="ch-theme"></p>
+  </div>
+  <div style="padding:12px 16px 80px;" id="chapter-tasks"></div>
+</div>
+
+<!-- MISHNA -->
+<div id="page-mishna" class="page">
+  <div class="header">
+    <button class="back-btn" onclick="backToChapter()">← חזור</button>
+    <h1 id="mishna-title">המשניות</h1>
+  </div>
+  <div style="padding:0 0 80px;">
+    <div id="mishna-list"></div>
+    <div style="padding:0 16px;margin-top:4px;"><button class="btn btn-primary" onclick="saveMishnayot()">💾 שמור התקדמות</button></div>
+  </div>
+</div>
+
+<!-- TASK -->
+<div id="page-task" class="page">
+  <div class="header">
+    <button class="back-btn" onclick="backToChapter()">← חזור</button>
+    <h1 id="task-title">משימה</h1>
+  </div>
+  <div id="task-content" style="padding:0 0 80px;"></div>
+</div>
+
+<!-- ADMIN -->
+<div id="page-admin" class="page">
+  <div class="header">
+    <button class="back-btn" onclick="doAdminLogout()">יציאה</button>
+    <h1>פאנל מנהל 🎓</h1><p id="admin-site-name"></p>
+  </div>
+  <div id="admin-gate" class="card">
+    <h2 style="margin-bottom:14px;">כניסת מנהל</h2>
+    <div class="form-group"><label>סיסמה</label><input type="password" id="admin-pw-inp" onkeydown="if(event.key==='Enter')checkAdminPw()"></div>
+    <div id="admin-pw-err" style="color:#ef4444;font-size:14px;margin-bottom:8px;display:none;">סיסמה שגויה</div>
+    <button class="btn btn-primary" onclick="checkAdminPw()">כניסה</button>
+    <button class="btn btn-gray" onclick="showPage('page-login')">ביטול</button>
+  </div>
+  <div id="admin-content" style="display:none;">
+    <div class="admin-tab-bar">
+      <button class="admin-tab active" data-tab="students" onclick="switchAdminTab('students')">📊 סטטיסטיקות</button>
+      <button class="admin-tab" data-tab="manage" onclick="switchAdminTab('manage')">👥 ניהול תלמידים</button>
+      <button class="admin-tab" data-tab="chapters" onclick="switchAdminTab('chapters')">📖 פרקים</button>
+      <button class="admin-tab" data-tab="editor" onclick="switchAdminTab('editor')">✏️ ערוך אתר</button>
+    </div>
+    <div class="admin-panel active" id="panel-students">
+      <button class="btn btn-outline btn-sm" onclick="exportCSV()" style="margin-bottom:12px;">⬇ ייצא CSV</button>
+      <div style="overflow-x:auto;"><table id="students-table">
+        <thead><tr><th>שם</th><th>כיתה</th><th>נקודות</th><th>פרקים</th><th>הישגים</th><th>כניסה אחרונה</th></tr></thead>
+        <tbody></tbody></table></div>
+    </div>
+    <div class="admin-panel" id="panel-manage">
+      <div class="editor-section">
+        <h3>➕ הוסף תלמיד</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;">
+          <div><label>שם פרטי</label><input id="add-fn" placeholder="שם פרטי"></div>
+          <div><label>שם משפחה</label><input id="add-ln" placeholder="שם משפחה"></div>
+          <div><label>כיתה</label><input id="add-gr" placeholder="כיתה"></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addStudent()" style="margin-top:10px;padding:10px 20px;">הוסף</button>
+      </div>
+      <div class="editor-section">
+        <h3>👥 רשימת תלמידים (<span id="student-count">0</span>)</h3>
+        <div id="manage-student-list"></div>
+      </div>
+    </div>
+    <div class="admin-panel" id="panel-chapters">
+      <div style="overflow-x:auto;"><table id="chapters-table">
+        <thead><tr><th>פרק</th><th>נושא</th><th>פתיחה</th><th>סטטוס</th><th>תלמידים שסיימו</th></tr></thead>
+        <tbody></tbody></table></div>
+    </div>
+    <div class="admin-panel" id="panel-editor">
+      <div class="editor-section">
+        <h3>📝 כותרות</h3>
+        <div class="form-group"><label>שם המבצע</label><input id="ed-campaign"></div>
+        <div class="form-group"><label>הודעה לתלמידים (באנר צהוב)</label><textarea id="ed-announcement" rows="2"></textarea></div>
+      </div>
+      <div class="editor-section">
+        <h3>🎨 צבעים</h3>
+        <div class="color-preset-wrap">
+          <div class="color-preset" onclick="applyPreset(this,'#1e3a8a','#f59e0b','#fef9f0')">👑 מלכותי</div>
+          <div class="color-preset" onclick="applyPreset(this,'#7c3aed','#f97316','#fdf4ff')">💜 סגול</div>
+          <div class="color-preset" onclick="applyPreset(this,'#059669','#f59e0b','#f0fdf4')">🌿 טבע</div>
+          <div class="color-preset" onclick="applyPreset(this,'#0ea5e9','#10b981','#f0f9ff')">🌊 ים</div>
+          <div class="color-preset" onclick="applyPreset(this,'#dc2626','#f97316','#fff7f0')">🔥 אש</div>
+          <div class="color-preset" onclick="applyPreset(this,'#111827','#2563eb','#f9fafb')">🌑 כהה</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div class="form-group"><label>צבע ראשי</label><input type="color" id="ed-color-primary" oninput="liveColorPreview()"></div>
+          <div class="form-group"><label>הדגשה</label><input type="color" id="ed-color-accent" oninput="liveColorPreview()"></div>
+          <div class="form-group"><label>רקע</label><input type="color" id="ed-color-bg" oninput="liveColorPreview()"></div>
+        </div>
+        <div id="color-preview-bar" style="border-radius:10px;padding:10px;text-align:center;font-weight:700;font-size:14px;color:#fff;margin-top:4px;background:var(--primary);">תצוגה מקדימה</div>
+      </div>
+      <div class="editor-section">
+        <h3>🖼 לוגו ורקע</h3>
+        <div class="form-group"><label>URL לוגו</label><input id="ed-logo" oninput="previewImg('ed-logo','ed-logo-preview')"><img id="ed-logo-preview" class="preview-img"></div>
+        <div class="form-group"><label>URL רקע כותרת</label><input id="ed-bg-img" oninput="previewImg('ed-bg-img','ed-bg-preview')"><img id="ed-bg-preview" class="preview-img"></div>
+      </div>
+      <div class="editor-section">
+        <h3>↕ סדר ונראות משימות</h3>
+        <div id="task-order-list"></div>
+      </div>
+      <div class="editor-section">
+        <h3>📖 עריכת פרק</h3>
+        <div class="form-group"><label>בחר פרק</label><select id="ed-chapter-sel" onchange="loadEditorChapter()"></select></div>
+        <div class="form-group"><label>כותרת</label><input id="ed-ch-title"></div>
+        <div class="form-group"><label>נושא</label><textarea id="ed-ch-theme" rows="2"></textarea></div>
+        <div class="form-group"><label>אתגר</label><textarea id="ed-ch-challenge" rows="2"></textarea></div>
+        <div class="form-group"><label>תפילה</label><textarea id="ed-ch-prayer" rows="2"></textarea></div>
+        <div class="form-group"><label>תאריך פתיחה (השאר ריק לחישוב אוטומטי)</label><input type="date" id="ed-ch-date"></div>
+        <div id="ed-riddles-wrap"></div>
+        <div style="margin-top:14px;">
+          <label style="font-weight:700;display:block;margin-bottom:8px;">טקסט משניות</label>
+          <div id="ed-mishna-texts"></div>
+          <button class="btn btn-outline btn-sm" onclick="addMishnaField()" style="margin-top:8px;">+ הוסף משנה</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="saveEditorConfig()">💾 שמור שינויים</button>
+      <button class="btn btn-gray" style="margin-top:10px;" onclick="resetEditorConfig()">↺ אפס</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STUDENTS_DEFAULT = [
+  {firstName:"שמעיה",lastName:"שמעון",grade:"ז"}
+];
+
+function buildChapters(n){
+  const H=["א","ב","ג","ד","ה","ו","ז","ח","ט","י"];
+  return Array.from({length:n},(_,i)=>({
+    num:i+1,title:"פרק "+H[i],theme:"(המנהל ימלא)",
+    mishnaCount:5,
+    mishnaText:Array.from({length:5},(_,j)=>({num:H[j],text:"(המנהל ימלא)"})),
+    riddles:[
+      {citation:"ציטוט",q:"שאלה 1",opts:["תשובה א","תשובה ב","תשובה ג"],ans:0},
+      {citation:"ציטוט",q:"שאלה 2",opts:["תשובה א","תשובה ב","תשובה ג"],ans:0},
+      {citation:"ציטוט",q:"שאלה 3",opts:["תשובה א","תשובה ב","תשובה ג"],ans:0}
+    ],
+    challenge:"(המנהל ימלא)",
+    prayerIdea:"(המנהל ימלא)"
+  }));
+}
+
+const MASECHET = {
+  name:"ברכות",
+  org:"בית דגבלי",
+  logoUrl:null,
+  bgUrl:null,
+  campaign:'לימוד מסכת ברכות תשפ"ו',
+  adminPassword:"12345",
+  startDate:"2026-06-14",
+  cycleDays:2,
+  ageGroup:"middle",
+  announcement:"",
+  taskOrder:["mishnayot","riddle","challenge","prayer"],
+  taskVisible:{mishnayot:true,riddle:true,challenge:true,prayer:true},
+  colors:null,
+  chapters:buildChapters(9)
+};
+
+const AGE_THEMES={young:{primary:"#7c3aed",accent:"#f97316",bg:"#fdf4ff"},"upper-elem":{primary:"#0ea5e9",accent:"#10b981",bg:"#f0f9ff"},middle:{primary:"#1e3a8a",accent:"#f59e0b",bg:"#fef9f0"},highschool:{primary:"#111827",accent:"#2563eb",bg:"#f9fafb"}};
+function cfgKey(){return "ms_"+MASECHET.name+"_site_config";}
+function loadSiteConfig(){
+  try{
+    const cfg=JSON.parse(localStorage.getItem(cfgKey())||"{}");
+    if(cfg.campaign)MASECHET.campaign=cfg.campaign;
+    if(cfg.announcement!==undefined)MASECHET.announcement=cfg.announcement;
+    if(cfg.logoUrl!==undefined)MASECHET.logoUrl=cfg.logoUrl;
+    if(cfg.bgUrl!==undefined)MASECHET.bgUrl=cfg.bgUrl;
+    if(cfg.taskOrder)MASECHET.taskOrder=cfg.taskOrder;
+    if(cfg.taskVisible)Object.assign(MASECHET.taskVisible,cfg.taskVisible);
+    if(cfg.colors)MASECHET.colors=cfg.colors;
+    if(cfg.students)MASECHET.students=cfg.students;
+    if(cfg.chapters)cfg.chapters.forEach((c,i)=>{if(MASECHET.chapters[i])Object.assign(MASECHET.chapters[i],c);});
+  }catch(e){}
+}
+function saveSiteConfig(){
+  const cfg={campaign:MASECHET.campaign,announcement:MASECHET.announcement||"",logoUrl:MASECHET.logoUrl,bgUrl:MASECHET.bgUrl,taskOrder:MASECHET.taskOrder,taskVisible:MASECHET.taskVisible,colors:MASECHET.colors,students:MASECHET.students,chapters:MASECHET.chapters.map(c=>({title:c.title,theme:c.theme,challenge:c.challenge,prayerIdea:c.prayerIdea,riddles:c.riddles,mishnaText:c.mishnaText,mishnaCount:c.mishnaCount,unlockDate:c.unlockDate}))};
+  localStorage.setItem(cfgKey(),JSON.stringify(cfg));
+}
+function getStudents(){return MASECHET.students||STUDENTS_DEFAULT;}
+
+function applyColors(c){
+  const r=document.documentElement.style;
+  r.setProperty("--primary",c.primary);r.setProperty("--accent",c.accent);r.setProperty("--bg",c.bg);
+  const hex=c.primary,rv=parseInt(hex.slice(1,3),16),gv=parseInt(hex.slice(3,5),16),bv=parseInt(hex.slice(5,7),16);
+  r.setProperty("--hgrad","linear-gradient(135deg,"+c.primary+",rgb("+Math.max(rv-30,0)+","+Math.max(gv-10,0)+","+Math.min(bv+50,255)+"))");
+}
+function initColors(){applyColors(MASECHET.colors||(AGE_THEMES[MASECHET.ageGroup]||AGE_THEMES.middle));}
+
+const POINTS={perMishna:10,riddleCorrect:30,challenge:50,prayer:40,perfectBonus:70};
+let currentUser=null,currentChapterNum=1;
+function userKey(u){return "ms_"+MASECHET.name+"_"+u.firstName+"_"+u.lastName;}
+function loadUser(fn,ln){
+  const d=localStorage.getItem("ms_"+MASECHET.name+"_"+fn+"_"+ln);
+  if(d)return JSON.parse(d);
+  const u={firstName:fn,lastName:ln,grade:"",totalPoints:0,lastLogin:null,chapters:{},achievements:{firstStep:false,fullReader:false,riddleSolver:false,trainer:false,prayerWriter:false,streak3:false,perfectChapter:false},consecutiveChapters:0};
+  MASECHET.chapters.forEach((_,i)=>{u.chapters[i+1]={mishnayotRead:0,mishnaDone:[],riddle:[null,null,null],challengeDone:false,challengeText:"",prayerDone:false,prayerText:""};});
+  return u;
+}
+function saveUser(u){localStorage.setItem(userKey(u),JSON.stringify(u));}
+function addPoints(u,pts){u.totalPoints=(u.totalPoints||0)+pts;showToast("+"+pts+" נקודות! ⭐");saveUser(u);}
+function checkAndAwardAchievements(u,chNum){
+  const ch=u.chapters[chNum]||{},a=u.achievements;
+  const award=(k,lbl)=>{if(!a[k]){a[k]=true;showToast("🏆 "+lbl+" — הישג חדש!");}};
+  if(ch.mishnayotRead>0||(ch.riddle&&ch.riddle.some(r=>r!==null))||ch.challengeDone||ch.prayerDone)award("firstStep","צעד ראשון");
+  if(ch.mishnayotRead>=(MASECHET.chapters[chNum-1]||{}).mishnaCount)award("fullReader","קורא שלם");
+  if(ch.riddle&&ch.riddle.every(r=>r===true))award("riddleSolver","פותר חידות");
+  if(ch.challengeDone)award("trainer","מאמן");
+  if(ch.prayerDone)award("prayerWriter","מתפלל");
+  const perf=ch.mishnayotRead>0&&ch.riddle&&ch.riddle.some(r=>r!==null)&&ch.challengeDone&&ch.prayerDone;
+  if(!a.perfectChapter&&perf){a.perfectChapter=true;addPoints(u,POINTS.perfectBonus);showToast("🏆 פרק מושלם!");}
+  if((u.consecutiveChapters||0)>=3)award("streak3","רצף של 3");
+  saveUser(u);
+}
+
+function isChapterUnlocked(ch){
+  if(ch.unlockDate)return new Date()>=new Date(ch.unlockDate);
+  const days=Math.floor((Date.now()-new Date(MASECHET.startDate))/86400000);
+  return ch.num<=Math.min(Math.floor(days/MASECHET.cycleDays)+1,MASECHET.chapters.length);
+}
+function unlockDateStr(ch){
+  if(ch.unlockDate)return new Date(ch.unlockDate).toLocaleDateString("he-IL");
+  const d=new Date(MASECHET.startDate);d.setDate(d.getDate()+(ch.num-1)*MASECHET.cycleDays);return d.toLocaleDateString("he-IL");
+}
+
+function showPage(id){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo(0,0);}
+
+function initLogin(){
+  if(MASECHET.logoUrl)document.getElementById("login-logo-wrap").innerHTML='<img src="'+MASECHET.logoUrl+'" class="header-logo">';
+  document.getElementById("login-campaign").textContent=MASECHET.campaign;
+  document.getElementById("login-org").textContent=MASECHET.org;
+  document.title=MASECHET.campaign+" | "+MASECHET.org;
+  const inp=document.getElementById("inp-first"),list=document.getElementById("ac-first");
+  inp.addEventListener("input",()=>{
+    const q=inp.value.trim().toLowerCase();
+    if(!q){list.classList.remove("open");return;}
+    const names=[...new Set(getStudents().filter(s=>s.firstName.toLowerCase().startsWith(q)).map(s=>s.firstName))].slice(0,8);
+    list.innerHTML=names.map(n=>'<div class="ac-item" onclick="selectFirst(\''+n+'\')">'+n+'</div>').join("");
+    list.classList.toggle("open",names.length>0);
+  });
+  document.addEventListener("click",e=>{if(!e.target.closest(".ac-wrap"))list.classList.remove("open");});
+}
+function selectFirst(fn){
+  document.getElementById("inp-first").value=fn;document.getElementById("ac-first").classList.remove("open");
+  const m=getStudents().filter(s=>s.firstName===fn);
+  if(m.length===1){document.getElementById("inp-last").value=m[0].lastName;document.getElementById("inp-grade").value=m[0].grade;}
+  else{document.getElementById("inp-last").value="";document.getElementById("inp-grade").value="";}
+}
+function doLogin(){
+  const fn=document.getElementById("inp-first").value.trim(),ln=document.getElementById("inp-last").value.trim(),gr=document.getElementById("inp-grade").value.trim(),err=document.getElementById("login-error");
+  if(!fn||!ln){err.textContent="אנא בחר שמך מהרשימה";err.style.display="block";return;}
+  if(!getStudents().find(s=>s.firstName===fn&&s.lastName===ln)){err.textContent="שמך אינו ברשימה, פנה למורה";err.style.display="block";return;}
+  err.style.display="none";
+  currentUser=loadUser(fn,ln);currentUser.grade=gr;currentUser.lastLogin=new Date().toISOString();saveUser(currentUser);showDashboard();
+}
+
+function showDashboard(){
+  if(!currentUser){showPage("page-login");return;}
+  if(MASECHET.logoUrl)document.getElementById("dash-logo-wrap").innerHTML='<img src="'+MASECHET.logoUrl+'" class="header-logo">';
+  document.getElementById("dash-campaign").textContent=MASECHET.campaign;
+  document.getElementById("dash-user-info").textContent="שלום, "+currentUser.firstName+" "+currentUser.lastName+" | כיתה "+currentUser.grade;
+  document.getElementById("dash-points").textContent=currentUser.totalPoints+" נקודות";
+  const banner=document.getElementById("dash-banner");
+  if(MASECHET.announcement){banner.textContent=MASECHET.announcement;banner.style.display="block";}else banner.style.display="none";
+  const grid=document.getElementById("chapter-grid");grid.innerHTML="";
+  MASECHET.chapters.forEach(ch=>{
+    const unlocked=isChapterUnlocked(ch),uch=currentUser.chapters[ch.num]||{};
+    const done=[(uch.mishnayotRead||0)>0,uch.riddle&&uch.riddle.some(r=>r!==null),uch.challengeDone,uch.prayerDone].filter(Boolean).length;
+    const card=document.createElement("div");card.className="chapter-card"+(unlocked?"":" locked");
+    card.innerHTML="<h3>"+(unlocked?"":"🔒 ")+ch.title+"</h3><div class=\"meta\">"+(unlocked?ch.theme:"ייפתח ב-"+unlockDateStr(ch))+"</div>"+(unlocked?"<div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:"+(done*25)+"%\"></div></div><div class=\"meta\" style=\"margin-top:4px;\">"+done+"/4 משימות</div>":"");
+    if(unlocked)card.onclick=()=>showChapter(ch.num);
+    grid.appendChild(card);
+  });
+  showPage("page-dashboard");
+}
+
+function showChapter(num){
+  currentChapterNum=num;const ch=MASECHET.chapters[num-1];
+  document.getElementById("ch-title").textContent=ch.title;document.getElementById("ch-theme").textContent=ch.theme;
+  const wrap=document.getElementById("chapter-tasks");wrap.innerHTML="";const uch=currentUser.chapters[num]||{};
+  const META={mishnayot:{icon:"📖",label:"קריאת משניות",fn:()=>showMishna(num)},riddle:{icon:"❓",label:"חידה שבועית",fn:()=>showRiddle(num)},challenge:{icon:"🎯",label:"אתגר השבוע",fn:()=>showChallenge(num)},prayer:{icon:"🙏",label:"משנה מתפללת",fn:()=>showPrayer(num)}};
+  MASECHET.taskOrder.forEach(key=>{
+    if(!MASECHET.taskVisible[key])return;
+    const m=META[key],done=(key==="mishnayot"&&(uch.mishnayotRead||0)>0)||(key==="riddle"&&uch.riddle&&uch.riddle.some(r=>r!==null))||(key==="challenge"&&uch.challengeDone)||(key==="prayer"&&uch.prayerDone);
+    const btn=document.createElement("button");btn.className="task-btn"+(done?" done":"");
+    btn.innerHTML='<span class="icon">'+m.icon+'</span><span class="label">'+m.label+'</span>'+(done?'<span class="check">✓</span>':"");
+    btn.onclick=m.fn;wrap.appendChild(btn);
+  });
+  showPage("page-chapter");
+}
+
+function showMishna(num){
+  const ch=MASECHET.chapters[num-1];document.getElementById("mishna-title").textContent=ch.title+" — המשניות";
+  const uch=currentUser.chapters[num]||{mishnaDone:[]},list=document.getElementById("mishna-list");list.innerHTML="";
+  ch.mishnaText.forEach((m,i)=>{
+    const done=(uch.mishnaDone||[]).includes(i),div=document.createElement("div");div.className="mishna-block";
+    div.innerHTML='<div class="mishna-num">משנה '+m.num+'</div><div style="line-height:1.9;">'+m.text+'</div><div class="mishna-check"><input type="checkbox" id="mc'+i+'" '+(done?"checked":"")+'><label for="mc'+i+'" style="cursor:pointer;font-size:14px;">קראתי</label></div>';
+    list.appendChild(div);
+  });
+  showPage("page-mishna");
+}
+function saveMishnayot(){
+  const ch=MASECHET.chapters[currentChapterNum-1],uch=currentUser.chapters[currentChapterNum]||{},newDone=[];
+  ch.mishnaText.forEach((_,i)=>{if(document.getElementById("mc"+i)?.checked)newDone.push(i);});
+  const prev=(uch.mishnaDone||[]).length;uch.mishnaDone=newDone;uch.mishnayotRead=newDone.length;
+  if(newDone.length-prev>0)addPoints(currentUser,(newDone.length-prev)*POINTS.perMishna);
+  currentUser.chapters[currentChapterNum]=uch;saveUser(currentUser);checkAndAwardAchievements(currentUser,currentChapterNum);backToChapter();
+}
+
+function showRiddle(num){
+  const ch=MASECHET.chapters[num-1],uch=currentUser.chapters[num]||{};
+  document.getElementById("task-title").textContent="❓ חידה שבועית";
+  const wrap=document.getElementById("task-content");wrap.innerHTML="";
+  ch.riddles.forEach((r,ri)=>{
+    const answered=uch.riddle&&uch.riddle[ri]!==null,div=document.createElement("div");div.className="card";div.style.marginBottom="12px";
+    div.innerHTML='<div class="citation-box">"'+r.citation+'"</div><p style="font-weight:700;margin-bottom:12px;">'+(ri+1)+'. '+r.q+'</p><div id="riddle-opts-'+ri+'">'+r.opts.map((o,oi)=>'<button class="riddle-opt'+(answered&&oi===r.ans?" correct":"")+'" onclick="answerRiddle('+num+','+ri+','+oi+')" '+(answered?"disabled":"")+'>'+o+'</button>').join("")+'</div>';
+    wrap.appendChild(div);
+  });
+  showPage("page-task");
+}
+function answerRiddle(num,ri,chosen){
+  const r=MASECHET.chapters[num-1].riddles[ri],uch=currentUser.chapters[num];
+  if(!uch.riddle)uch.riddle=[null,null,null];if(uch.riddle[ri]!==null)return;
+  const correct=chosen===r.ans;uch.riddle[ri]=correct;
+  if(correct)addPoints(currentUser,POINTS.riddleCorrect);
+  saveUser(currentUser);
+  document.querySelectorAll("#riddle-opts-"+ri+" .riddle-opt").forEach((btn,oi)=>{btn.disabled=true;if(oi===r.ans)btn.classList.add("correct");else if(oi===chosen&&!correct)btn.classList.add("wrong");});
+  checkAndAwardAchievements(currentUser,num);
+}
+
+function showChallenge(num){
+  const ch=MASECHET.chapters[num-1],uch=currentUser.chapters[num]||{};
+  document.getElementById("task-title").textContent="🎯 אתגר השבוע";
+  document.getElementById("task-content").innerHTML='<div class="card"><p style="font-weight:700;margin-bottom:12px;">'+ch.challenge+'</p><textarea id="challenge-txt" rows="4" placeholder="כתוב כאן...">'+(uch.challengeText||"")+'</textarea><button class="btn btn-primary" style="margin-top:10px;" onclick="saveChallenge('+num+')">'+(uch.challengeDone?"עדכן":"שלח ✨")+'</button></div>';
+  showPage("page-task");
+}
+function saveChallenge(num){
+  const txt=document.getElementById("challenge-txt").value.trim();if(!txt){showToast("כתוב משהו קודם 😊");return;}
+  const uch=currentUser.chapters[num],first=!uch.challengeDone;uch.challengeDone=true;uch.challengeText=txt;
+  if(first)addPoints(currentUser,POINTS.challenge);saveUser(currentUser);checkAndAwardAchievements(currentUser,num);showToast("✓ האתגר נשמר!");
+}
+
+function showPrayer(num){
+  const ch=MASECHET.chapters[num-1],uch=currentUser.chapters[num]||{};
+  document.getElementById("task-title").textContent="🙏 משנה מתפללת";
+  document.getElementById("task-content").innerHTML='<div class="card"><p style="font-style:italic;margin-bottom:12px;">'+ch.prayerIdea+'</p><textarea id="prayer-txt" rows="4" placeholder="כתוב תפילה...">'+(uch.prayerText||"")+'</textarea><button class="btn btn-primary" style="margin-top:10px;" onclick="savePrayer('+num+')">'+(uch.prayerDone?"עדכן":"שלח ✨")+'</button></div>';
+  showPage("page-task");
+}
+function savePrayer(num){
+  const txt=document.getElementById("prayer-txt").value.trim();if(!txt){showToast("כתוב תפילה קודם 😊");return;}
+  const uch=currentUser.chapters[num],first=!uch.prayerDone;uch.prayerDone=true;uch.prayerText=txt;
+  if(first)addPoints(currentUser,POINTS.prayer);saveUser(currentUser);checkAndAwardAchievements(currentUser,num);showToast("✓ התפילה נשמרה!");
+}
+function backToChapter(){showChapter(currentChapterNum);}
+
+function showAdminGate(){showPage("page-admin");document.getElementById("admin-gate").style.display="block";document.getElementById("admin-content").style.display="none";}
+function checkAdminPw(){
+  if(document.getElementById("admin-pw-inp").value===MASECHET.adminPassword){
+    document.getElementById("admin-pw-err").style.display="none";document.getElementById("admin-pw-inp").value="";
+    document.getElementById("admin-gate").style.display="none";document.getElementById("admin-content").style.display="block";
+    document.getElementById("admin-site-name").textContent=MASECHET.name+" | "+MASECHET.org;
+    switchAdminTab("students");
+  }else document.getElementById("admin-pw-err").style.display="block";
+}
+function doAdminLogout(){currentUser=null;showPage("page-login");}
+function switchAdminTab(tab){
+  document.querySelectorAll(".admin-tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===tab));
+  document.querySelectorAll(".admin-panel").forEach(p=>p.classList.remove("active"));
+  document.getElementById("panel-"+tab).classList.add("active");
+  if(tab==="students")buildStudentsTable();
+  if(tab==="manage")buildManageList();
+  if(tab==="chapters")buildChaptersTable();
+  if(tab==="editor")loadEditorForm();
+}
+function buildStudentsTable(){
+  const tbody=document.querySelector("#students-table tbody");tbody.innerHTML="";
+  getStudents().forEach(s=>{
+    const u=loadUser(s.firstName,s.lastName),achCount=Object.values(u.achievements).filter(Boolean).length,last=u.lastLogin?new Date(u.lastLogin).toLocaleDateString("he-IL"):"טרם";
+    const tr=document.createElement("tr");tr.innerHTML="<td>"+s.firstName+" "+s.lastName+"</td><td>"+s.grade+"</td><td>"+u.totalPoints+"</td><td>"+Object.values(u.chapters).filter(c=>c.mishnayotRead>0).length+"</td><td>"+achCount+"/7</td><td>"+last+"</td>";tbody.appendChild(tr);
+  });
+}
+function buildManageList(){
+  const students=getStudents();document.getElementById("student-count").textContent=students.length;
+  const wrap=document.getElementById("manage-student-list");
+  if(!students.length){wrap.innerHTML='<p style="color:#6b7280;font-size:14px;">אין תלמידים ברשימה</p>';return;}
+  wrap.innerHTML='<table><thead><tr><th>שם פרטי</th><th>שם משפחה</th><th>כיתה</th><th>הסר</th></tr></thead><tbody>'+students.map((s,i)=>"<tr><td>"+s.firstName+"</td><td>"+s.lastName+"</td><td>"+s.grade+"</td><td><button class=\"btn btn-danger btn-sm\" onclick=\"removeStudent("+i+")\">✕ הסר</button></td></tr>").join("")+'</tbody></table>';
+}
+function addStudent(){
+  const fn=document.getElementById("add-fn").value.trim(),ln=document.getElementById("add-ln").value.trim(),gr=document.getElementById("add-gr").value.trim();
+  if(!fn||!ln){showToast("מלא שם פרטי ומשפחה");return;}
+  const students=[...getStudents()];
+  if(students.find(s=>s.firstName===fn&&s.lastName===ln)){showToast("תלמיד זה כבר ברשימה");return;}
+  students.push({firstName:fn,lastName:ln,grade:gr||""});MASECHET.students=students;saveSiteConfig();
+  document.getElementById("add-fn").value="";document.getElementById("add-ln").value="";document.getElementById("add-gr").value="";
+  buildManageList();showToast("✓ "+fn+" "+ln+" נוסף");
+}
+function removeStudent(i){
+  const students=[...getStudents()],s=students[i];
+  if(!confirm("להסיר את "+s.firstName+" "+s.lastName+"?"))return;
+  students.splice(i,1);MASECHET.students=students;saveSiteConfig();buildManageList();showToast("✓ "+s.firstName+" "+s.lastName+" הוסר");
+}
+function buildChaptersTable(){
+  const tbody=document.querySelector("#chapters-table tbody");tbody.innerHTML="";
+  MASECHET.chapters.forEach(ch=>{
+    const open=isChapterUnlocked(ch),completed=getStudents().filter(s=>{const u=loadUser(s.firstName,s.lastName),uch=u.chapters[ch.num]||{};return uch.mishnayotRead>0&&uch.challengeDone&&uch.prayerDone;}).length;
+    const tr=document.createElement("tr");tr.innerHTML="<td>"+ch.title+"</td><td>"+ch.theme+"</td><td>"+unlockDateStr(ch)+"</td><td>"+(open?"✅ פתוח":"🔒 נעול")+"</td><td>"+completed+"/"+getStudents().length+"</td>";tbody.appendChild(tr);
+  });
+}
+function exportCSV(){
+  let csv="שם פרטי,שם משפחה,כיתה,נקודות,פרקים,הישגים\n";
+  getStudents().forEach(s=>{const u=loadUser(s.firstName,s.lastName);csv+=s.firstName+","+s.lastName+","+s.grade+","+u.totalPoints+","+Object.values(u.chapters).filter(c=>c.mishnayotRead>0).length+","+Object.values(u.achievements).filter(Boolean).length+"\n";});
+  const a=document.createElement("a");a.href="data:text/csv;charset=utf-8,﻿"+encodeURIComponent(csv);a.download=MASECHET.name+"_students.csv";a.click();
+}
+
+function loadEditorForm(){
+  document.getElementById("ed-campaign").value=MASECHET.campaign;
+  document.getElementById("ed-announcement").value=MASECHET.announcement||"";
+  document.getElementById("ed-logo").value=MASECHET.logoUrl||"";
+  document.getElementById("ed-bg-img").value=MASECHET.bgUrl||"";
+  previewImg("ed-logo","ed-logo-preview");previewImg("ed-bg-img","ed-bg-preview");
+  const c=MASECHET.colors||(AGE_THEMES[MASECHET.ageGroup]||AGE_THEMES.middle);
+  document.getElementById("ed-color-primary").value=c.primary;
+  document.getElementById("ed-color-accent").value=c.accent;
+  document.getElementById("ed-color-bg").value=c.bg;
+  buildTaskOrderList();buildChapterSel();loadEditorChapter();
+}
+function previewImg(inp,prev){
+  const url=document.getElementById(inp).value.trim(),img=document.getElementById(prev);
+  if(url){img.src=url;img.style.display="block";}else img.style.display="none";
+}
+function applyPreset(el,primary,accent,bg){
+  document.querySelectorAll(".color-preset").forEach(p=>p.classList.remove("sel"));el.classList.add("sel");
+  document.getElementById("ed-color-primary").value=primary;document.getElementById("ed-color-accent").value=accent;document.getElementById("ed-color-bg").value=bg;
+  liveColorPreview();
+}
+function liveColorPreview(){
+  const p=document.getElementById("ed-color-primary").value,a=document.getElementById("ed-color-accent").value,b=document.getElementById("ed-color-bg").value;
+  applyColors({primary:p,accent:a,bg:b});document.getElementById("color-preview-bar").style.background=p;
+}
+function buildTaskOrderList(){
+  const LABELS={mishnayot:"📖 קריאת משניות",riddle:"❓ חידה שבועית",challenge:"🎯 אתגר השבוע",prayer:"🙏 משנה מתפללת"};
+  const wrap=document.getElementById("task-order-list");wrap.innerHTML="";
+  MASECHET.taskOrder.forEach(key=>{
+    const div=document.createElement("div");div.className="drag-item";div.draggable=true;div.dataset.key=key;
+    div.innerHTML='<span class="drag-handle">≡</span><span style="flex:1;font-weight:600;">'+LABELS[key]+'</span><button class="toggle-btn '+(MASECHET.taskVisible[key]?"on":"")+'" onclick="toggleTask(\''+key+'\',this)">'+(MASECHET.taskVisible[key]?"מוצג":"מוסתר")+'</button>';
+    div.addEventListener("dragstart",e=>e.dataTransfer.setData("text/plain",key));
+    div.addEventListener("dragover",e=>e.preventDefault());
+    div.addEventListener("drop",e=>{e.preventDefault();const from=e.dataTransfer.getData("text/plain"),to=key;if(from===to)return;const arr=MASECHET.taskOrder,fi=arr.indexOf(from),ti=arr.indexOf(to);arr.splice(fi,1);arr.splice(ti,0,from);buildTaskOrderList();});
+    wrap.appendChild(div);
+  });
+}
+function toggleTask(key,btn){MASECHET.taskVisible[key]=!MASECHET.taskVisible[key];btn.textContent=MASECHET.taskVisible[key]?"מוצג":"מוסתר";btn.classList.toggle("on",MASECHET.taskVisible[key]);}
+function buildChapterSel(){document.getElementById("ed-chapter-sel").innerHTML=MASECHET.chapters.map(ch=>'<option value="'+(ch.num-1)+'">'+ch.title+'</option>').join("");}
+function loadEditorChapter(){
+  const i=parseInt(document.getElementById("ed-chapter-sel").value),ch=MASECHET.chapters[i];
+  document.getElementById("ed-ch-title").value=ch.title;document.getElementById("ed-ch-theme").value=ch.theme;
+  document.getElementById("ed-ch-challenge").value=ch.challenge;document.getElementById("ed-ch-prayer").value=ch.prayerIdea;
+  document.getElementById("ed-ch-date").value=ch.unlockDate||"";
+  const rw=document.getElementById("ed-riddles-wrap");rw.innerHTML="";
+  ch.riddles.forEach((r,ri)=>{
+    const d=document.createElement("div");d.style.cssText="border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:10px;";
+    d.innerHTML='<div style="font-weight:700;font-size:14px;margin-bottom:8px;">שאלה '+(ri+1)+'</div><div class="form-group"><label>ציטוט</label><input class="ed-r-cite" value="'+r.citation.replace(/"/g,"&quot;")+'"></div><div class="form-group"><label>שאלה</label><input class="ed-r-q" value="'+r.q.replace(/"/g,"&quot;")+'"></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;"><div><label>א</label><input class="ed-r-a0" value="'+(r.opts[0]||"")+'"></div><div><label>ב</label><input class="ed-r-a1" value="'+(r.opts[1]||"")+'"></div><div><label>ג</label><input class="ed-r-a2" value="'+(r.opts[2]||"")+'"></div></div><div class="form-group"><label>תשובה נכונה</label><select class="ed-r-ans"><option value="0" '+(r.ans===0?"selected":"")+'>א</option><option value="1" '+(r.ans===1?"selected":"")+'>ב</option><option value="2" '+(r.ans===2?"selected":"")+'>ג</option></select></div>';
+    rw.appendChild(d);
+  });
+  const mw=document.getElementById("ed-mishna-texts");mw.innerHTML="";
+  ch.mishnaText.forEach(m=>addMishnaFieldData(m.num,m.text));
+}
+function addMishnaFieldData(num,text){
+  const mw=document.getElementById("ed-mishna-texts"),div=document.createElement("div");div.style.marginBottom="8px";
+  div.innerHTML='<div style="display:flex;gap:8px;align-items:flex-start;"><input style="width:55px;flex-shrink:0;" value="'+(num||"")+'" placeholder="מס׳"><textarea rows="3" style="flex:1;">'+(text||"")+'</textarea><button onclick="this.parentElement.parentElement.remove()" style="background:#fee2e2;border:none;border-radius:8px;padding:7px 10px;cursor:pointer;flex-shrink:0;">✕</button></div>';
+  mw.appendChild(div);
+}
+function addMishnaField(){addMishnaFieldData("","");}
+function saveEditorConfig(){
+  const i=parseInt(document.getElementById("ed-chapter-sel").value),ch=MASECHET.chapters[i];
+  ch.title=document.getElementById("ed-ch-title").value;ch.theme=document.getElementById("ed-ch-theme").value;
+  ch.challenge=document.getElementById("ed-ch-challenge").value;ch.prayerIdea=document.getElementById("ed-ch-prayer").value;
+  const dt=document.getElementById("ed-ch-date").value;if(dt)ch.unlockDate=dt;else delete ch.unlockDate;
+  document.querySelectorAll("#ed-riddles-wrap > div").forEach((div,ri)=>{
+    if(!ch.riddles[ri])ch.riddles[ri]={citation:"",q:"",opts:["","",""],ans:0};
+    ch.riddles[ri].citation=div.querySelector(".ed-r-cite").value;ch.riddles[ri].q=div.querySelector(".ed-r-q").value;
+    ch.riddles[ri].opts=[div.querySelector(".ed-r-a0").value,div.querySelector(".ed-r-a1").value,div.querySelector(".ed-r-a2").value];
+    ch.riddles[ri].ans=parseInt(div.querySelector(".ed-r-ans").value);
+  });
+  const texts=[];document.querySelectorAll("#ed-mishna-texts > div").forEach(div=>{const inp=div.querySelectorAll("input,textarea");texts.push({num:inp[0].value,text:inp[1].value});});
+  ch.mishnaText=texts;ch.mishnaCount=texts.length;
+  MASECHET.campaign=document.getElementById("ed-campaign").value;
+  MASECHET.announcement=document.getElementById("ed-announcement").value;
+  MASECHET.logoUrl=document.getElementById("ed-logo").value||null;
+  MASECHET.bgUrl=document.getElementById("ed-bg-img").value||null;
+  MASECHET.colors={primary:document.getElementById("ed-color-primary").value,accent:document.getElementById("ed-color-accent").value,bg:document.getElementById("ed-color-bg").value};
+  applyColors(MASECHET.colors);saveSiteConfig();showToast("✓ השינויים נשמרו");
+}
+function resetEditorConfig(){if(!confirm("למחוק את כל השינויים?"))return;localStorage.removeItem(cfgKey());location.reload();}
+
+function showToast(msg){const t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
+
+window.addEventListener("load",()=>{loadSiteConfig();initColors();initLogin();});
+</script>
+</body>
+</html>
